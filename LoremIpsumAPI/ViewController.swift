@@ -20,11 +20,11 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var UrlTextView: UITextView!
-    @IBOutlet weak var UIImageView: UIImageView!
+    @IBOutlet weak var pictureImageView: UIImageView!
     @IBOutlet weak var AuthorLabel: UILabel!
     
     let jsonUrlString = "https://picsum.photos/list"
-    var imageURL = String()
+    var imageURLString = String()
     var author = String()
     var imageArray: [String] = []
     
@@ -47,7 +47,7 @@ class ViewController: UIViewController {
                 for image in images {
                     self.imageArray.append(image.postUrl)
                     self.author = image.author
-                    self.imageURL = image.postUrl
+                    self.imageURLString = image.postUrl
 //                    print(self.author)
 //                    print(self.imageURL)
                 }
@@ -57,11 +57,12 @@ class ViewController: UIViewController {
 //            print(self.imageArray.count)
 //            print(self.imageArray.endIndex)
             print(self.imageArray[number])
-            self.imageURL = self.imageArray[number]
+            self.imageURLString = self.imageArray[number]
             }.resume()
-        
-        UrlTextView.text = imageURL
-        downloadImage(from: <#T##URL#>)
+        guard let imageUrl = URL(string: imageURLString) else { return }
+
+        UrlTextView.text = imageURLString
+        downloadImage(from: imageUrl)
     }
 
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
@@ -76,7 +77,7 @@ class ViewController: UIViewController {
             print(response?.suggestedFilename ?? url.lastPathComponent)
             print("Download Finished")
             DispatchQueue.main.async() {
-                self.imageView.image = UIImage(data: data)
+                self.pictureImageView.image = UIImage(data: data)
             }
         }
     }

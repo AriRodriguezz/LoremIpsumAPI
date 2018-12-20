@@ -53,8 +53,8 @@
                     </view>
                     <connections>
                         <outlet property="AuthorLabel" destination="BOB-kC-5Zf" id="tze-bH-SzT"/>
-                        <outlet property="UIImageView" destination="XqA-Yl-niV" id="GiY-l6-wLB"/>
                         <outlet property="UrlTextView" destination="aVn-qN-NQF" id="wqv-B9-Prb"/>
+                        <outlet property="pictureImageView" destination="XqA-Yl-niV" id="qzr-BX-sbO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
