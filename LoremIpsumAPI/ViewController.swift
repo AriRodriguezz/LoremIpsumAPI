@@ -19,6 +19,7 @@ struct Images: Codable {
 import UIKit
 class ViewController: UIViewController {
     
+    @IBOutlet weak var UrlTextView: UITextView!
     @IBOutlet weak var UIImageView: UIImageView!
     @IBOutlet weak var AuthorLabel: UILabel!
     
@@ -59,9 +60,26 @@ class ViewController: UIViewController {
             self.imageURL = self.imageArray[number]
             }.resume()
         
-        UrlLabel.text = imageURL
+        UrlTextView.text = imageURL
+        downloadImage(from: <#T##URL#>)
     }
+
+    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+    }
+
     
+    func downloadImage(from url: URL) {
+        print("Download Started")
+        getData(from: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            print(response?.suggestedFilename ?? url.lastPathComponent)
+            print("Download Finished")
+            DispatchQueue.main.async() {
+                self.imageView.image = UIImage(data: data)
+            }
+        }
+    }
     
     
 }
